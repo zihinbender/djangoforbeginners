@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # My apps.
     "accounts",
     "pages",
+    "articles",
 
     # 3rd party apps.
     "crispy_forms",
