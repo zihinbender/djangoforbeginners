@@ -19,12 +19,35 @@
             <div class="collapse navbar-collapse" id="navbarMain">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active fw-semibold" aria-current="page" href="{% url 'home' %}">Home</a>
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}"
+                            href="{% url 'home' %}">
+                            Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'post_new' %}active{% endif %}"
+                            href="{% url 'post_new' %}">
+                            New Blog Post
+                        </a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
+    <div class="container justify-content-center py-4 text-center">
+        {% if user.is_authenticated %}
+        <p class="h4 mb-2 text-secondary">Hi <span class="fw-semibold text-primary">{{ user.username }}</span>!</p>
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-primary btn-sm">Log Out</button>
+        </form>
+
+        {% else %}
+        <p class="h4 mb-3 text-secondary">You are not logged in.</p>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'login' %}">Log In</a>
+        <a class="btn btn-outline-primary btn-sm" href="{% url 'signup' %}">Sign Up</a>
+        {% endif %}
+    </div>
 
     <main class="container py-5 flex-grow-1">
         {% block content %}
